@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.nfalco79</groupId>
     <artifactId>k8s-provisioning-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <name>Kubernates dynamic persistent volume provisioning Plugin</name>
     <description>This plugin allow agent provisioning in kubernates with persistent volume claim binded to job lifecycle.</description>
@@ -36,7 +36,7 @@
 		<url>https://github.com/nfalco79/k8s-provisioning-plugin</url>
 		<connection>scm:git:git@github.com:nfalco79/k8s-provisioning-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:nfalco79/k8s-provisioning-plugin.git</developerConnection>
-		<tag>k8s-provisioning-plugin-1.0.0</tag>
+		<tag>HEAD</tag>
 	</scm>
 
     <properties>
