@@ -1,17 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.github.nfalco79</groupId>
-    <artifactId>k8s-provisioning-plugin</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
-    <packaging>hpi</packaging>
-    <name>Kubernates dynamic persistent volume provisioning Plugin</name>
-    <description>This plugin allow agent provisioning in kubernates with persistent volume claim binded to job lifecycle.</description>
-
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>4.31</version>
     </parent>
+
+    <groupId>com.github.nfalco79</groupId>
+    <artifactId>k8s-provisioning</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+    <packaging>hpi</packaging>
+    <name>Kubernates dynamic persistent volume provisioning Plugin</name>
+    <description>This plugin allow agent provisioning in kubernates with persistent volume claim binded to job lifecycle.</description>
 
     <licenses>
         <license>
@@ -118,6 +118,57 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>enable-jacoco</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eluder.coveralls</groupId>
+                            <artifactId>coveralls-maven-plugin</artifactId>
+                            <version>4.3.0</version>
+                            <configuration>
+                                <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
+                            </configuration>
+                            <dependencies>
+                                <!-- required on JDK 11 -->
+                                <dependency>
+                                    <groupId>com.sun.xml.bind</groupId>
+                                    <artifactId>jaxb-impl</artifactId>
+                                    <version>2.3.5</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.7</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/*Constants.class</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>release</id>
             <build>
