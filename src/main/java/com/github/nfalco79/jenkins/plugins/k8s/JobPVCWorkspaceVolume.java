@@ -25,9 +25,6 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-
 import org.csanchez.jenkins.plugins.kubernetes.volumes.workspace.WorkspaceVolume;
 import org.jenkinsci.Symbol;
 import org.kohsuke.accmod.Restricted;
@@ -37,6 +34,8 @@ import org.kohsuke.stapler.interceptor.RequirePOST;
 
 import com.google.common.collect.ImmutableMap;
 
+import edu.umd.cs.findbugs.annotations.CheckForNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
 import hudson.model.Descriptor;
 import hudson.util.ListBoxModel;
@@ -58,9 +57,9 @@ public class JobPVCWorkspaceVolume extends WorkspaceVolume {
     private final String accessModes;
 
     @DataBoundConstructor
-    public JobPVCWorkspaceVolume(@Nonnull String claimName,
+    public JobPVCWorkspaceVolume(@NonNull String claimName,
                                  String storageClassName,
-                                 @Nonnull String requestsSize,
+                                 @NonNull String requestsSize,
                                  String accessModes) {
         this.claimName = claimName;
         this.storageClassName = storageClassName;

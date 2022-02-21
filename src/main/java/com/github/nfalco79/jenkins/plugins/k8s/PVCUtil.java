@@ -17,8 +17,7 @@ package com.github.nfalco79.jenkins.plugins.k8s;
 
 import java.net.URLDecoder;
 
-import javax.annotation.Nonnull;
-
+import edu.umd.cs.findbugs.annotations.NonNull;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.Quantity;
 
@@ -34,7 +33,7 @@ public final class PVCUtil {
         return normalized.replaceAll("[^0-9a-z-._]", "");
     }
 
-    public static Quantity getRequestSize(@Nonnull PersistentVolumeClaim pvc) {
+    public static Quantity getRequestSize(@NonNull PersistentVolumeClaim pvc) {
         return pvc.getSpec().getResources().getRequests().get("storage");
     }
 }
