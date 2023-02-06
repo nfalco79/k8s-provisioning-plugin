@@ -1,5 +1,6 @@
 /*
  * Copyright 2021 Nikolas Falco
+ *
  * Licensed under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
@@ -17,8 +18,6 @@ package com.github.nfalco79.jenkins.plugins.k8s;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
-
-import com.github.nfalco79.jenkins.plugins.k8s.PVCUtil;
 
 public class PVCUtilTest {
 
