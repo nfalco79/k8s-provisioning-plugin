@@ -94,7 +94,7 @@
         <dependency>
             <groupId>org.csanchez.jenkins.plugins</groupId>
             <artifactId>kubernetes</artifactId>
-            <version>3845.va_9823979a_744</version>
+            <version>3852.v41ea_166a_ed1b_</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
