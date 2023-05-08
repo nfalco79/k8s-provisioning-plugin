@@ -44,7 +44,7 @@
         <java.level>8</java.level>
         <jenkins.version>2.375.1</jenkins.version>
         <releaseProfiles>release</releaseProfiles>
-        <checkstyle.version>10.9.3</checkstyle.version>
+        <checkstyle.version>10.10.0</checkstyle.version>
 
         <sonar.organization>nfalco79</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
