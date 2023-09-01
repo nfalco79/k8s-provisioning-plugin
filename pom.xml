@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.54</version>
+        <version>4.73</version>
     </parent>
 
     <groupId>com.github.nfalco79</groupId>
@@ -42,7 +42,7 @@
 
     <properties>
         <java.level>8</java.level>
-        <jenkins.version>2.375.1</jenkins.version>
+        <jenkins.version>2.401.1</jenkins.version>
         <releaseProfiles>release</releaseProfiles>
         <checkstyle.version>10.12.3</checkstyle.version>
 
@@ -78,10 +78,15 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.375.x</artifactId>
-                <version>2198.v39c76fc308ca</version>
+                <artifactId>bom-2.401.x</artifactId>
+                <version>2378.v3e03930028f2</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.jenkins-ci.plugins.workflow</groupId>
+                <artifactId>workflow-api</artifactId>
+                <version>1267.vd9b_a_ddd9eb_47</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -94,7 +99,7 @@
         <dependency>
             <groupId>org.csanchez.jenkins.plugins</groupId>
             <artifactId>kubernetes</artifactId>
-            <version>3937.vd7b_82db_e347b_</version>
+            <version>4029.v5712230ccb_f8</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
