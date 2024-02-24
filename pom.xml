@@ -3,7 +3,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.73</version>
+        <version>4.78</version>
     </parent>
 
     <groupId>com.github.nfalco79</groupId>
@@ -41,10 +41,10 @@
     </scm>
 
     <properties>
-        <java.level>8</java.level>
-        <jenkins.version>2.401.1</jenkins.version>
+        <java.level>17</java.level>
+        <jenkins.version>2.440.1</jenkins.version>
         <releaseProfiles>release</releaseProfiles>
-        <checkstyle.version>10.12.7</checkstyle.version>
+        <checkstyle.version>10.13.0</checkstyle.version>
 
         <sonar.organization>nfalco79</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -78,16 +78,18 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.401.x</artifactId>
-                <version>2378.v3e03930028f2</version>
+                <artifactId>bom-2.440.x</artifactId>
+                <version>2815.vf5d6f093b_23e</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <!--
             <dependency>
                 <groupId>org.jenkins-ci.plugins.workflow</groupId>
                 <artifactId>workflow-api</artifactId>
                 <version>1283.v99c10937efcb_</version>
             </dependency>
+            -->
         </dependencies>
     </dependencyManagement>
 
@@ -99,7 +101,6 @@
         <dependency>
             <groupId>org.csanchez.jenkins.plugins</groupId>
             <artifactId>kubernetes</artifactId>
-            <version>4029.v5712230ccb_f8</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
