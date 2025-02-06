@@ -56,7 +56,7 @@ public class PersistentVolumeClaimJobListener extends ItemListener {
                 PersistentVolumeClaim pvc = pvcs.stream().filter(p -> Objects.equals(p.getMetadata().getName(), pvcName)).findFirst().orElse(null);
                 if (pvc != null) {
                     // remove old volume, rename of pvc is not supported
-                    client.persistentVolumeClaims().delete(pvc);
+                    client.persistentVolumeClaims().resource(pvc).delete();
                     LOGGER.log(INFO, "Removed PVC: {0}/{1}", new Object[] { pvc.getMetadata().getNamespace(), jobName });
                 }
             }

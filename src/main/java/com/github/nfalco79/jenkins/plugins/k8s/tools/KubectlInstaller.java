@@ -82,8 +82,8 @@ public class KubectlInstaller extends DownloadFromUrlInstaller {
             return expected;
         }
 
-        if (installable instanceof NodeSpecific) {
-            installable = ((NodeSpecific<KubectlInstallable>) installable).forNode(node, log);
+        if (installable instanceof NodeSpecific specificNode) {
+            installable = (Installable) specificNode.forNode(node, log);
             kubectl = expected.child(((KubectlInstallable) installable).cmd);
         }
 
@@ -217,8 +217,9 @@ public class KubectlInstaller extends DownloadFromUrlInstaller {
 
         @Override
         public Void invoke(File d, VirtualChannel channel) throws IOException {
-            if (!Functions.isWindows())
+            if (!Functions.isWindows()) {
                 process(d);
+            }
             return null;
         }
 
