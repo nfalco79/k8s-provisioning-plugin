@@ -17,7 +17,6 @@
 package com.github.nfalco79.jenkins.plugins.k8s;
 
 import static java.util.logging.Level.INFO;
-import static java.util.logging.Level.WARNING;
 import static org.csanchez.jenkins.plugins.kubernetes.KubernetesCloud.DEFAULT_POD_LABELS;
 
 import java.util.List;
@@ -42,7 +41,6 @@ import io.fabric8.kubernetes.api.model.ObjectMeta;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaimBuilder;
 import io.fabric8.kubernetes.api.model.Quantity;
-import io.fabric8.kubernetes.api.model.StatusDetails;
 import io.fabric8.kubernetes.api.model.Volume;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
@@ -111,16 +109,13 @@ public class JobPVCWorkspaceVolume extends WorkspaceVolume implements DynamicPVC
         if (pvc != null) {
             // check if size has been changed
             Quantity actualStorage = PVCUtil.getRequestSize(pvc);
-            if (!actualStorage.equals(Quantity.parse(getRequestsSizeOrDefault()))) {
-                List<StatusDetails> details = client.persistentVolumeClaims().resource(pvc).delete();
-                details.forEach(d -> LOGGER.log(WARNING, "{0} {1} {2} {3} {4} {5}",
-                        new Object[] { d.getRetryAfterSeconds(), d.getCauses(),
-                                       d.getAdditionalProperties(), d.getName()}));
-                if (details.isEmpty()) {
-                    pvc = null;
-                } else {
-                    LOGGER.log(WARNING, "Can not remove PVC: {0}/{1}", new Object[] { namespace, pvcName });
-                }
+            Quantity requestStorage = Quantity.parse(getRequestsSizeOrDefault());
+            if (!actualStorage.equals(requestStorage)) {
+                LOGGER.log(INFO, "PVC request is different than actual storage, from {0} to {1}. Request new one", new Object[] { actualStorage, requestStorage });
+
+                client.persistentVolumeClaims().resource(pvc).delete();
+                LOGGER.log(INFO, "Removed PVC: {0}/{1}", new Object[] { pvc.getMetadata().getNamespace(), pvc.getFullResourceName() });
+                pvc = null;
             }
         }
 
@@ -148,10 +143,12 @@ public class JobPVCWorkspaceVolume extends WorkspaceVolume implements DynamicPVC
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         JobPVCWorkspaceVolume that = (JobPVCWorkspaceVolume) o;
         return Objects.equals(storageClassName, that.storageClassName) &&
                 Objects.equals(requestsSize, that.requestsSize) &&
