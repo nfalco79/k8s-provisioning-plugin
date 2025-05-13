@@ -143,7 +143,7 @@ public class KubectlInstaller extends DownloadFromUrlInstaller {
         // we store cache as tar.gz to preserve symlink
         return new File(Jenkins.get().getRootPath() //
                 .child("caches") //
-                .child("dependency-check") //
+                .child("k8s-provisioning") //
                 .child(platform.toString()) //
                 .child(id + ".tar.gz") //
                 .getRemote());
@@ -187,21 +187,29 @@ public class KubectlInstaller extends DownloadFromUrlInstaller {
                     proxy = proxyCfg.createProxy("api.github.com");
                 }
 
+                String uriTemplate = "https://api.github.com/repos/kubernetes/kubernetes/releases?per_page=100&page=";
                 List<KubectlInstallable> ghInstallables = new ArrayList<>();
-                URL githubURL = new URL("https://api.github.com/repos/kubernetes/kubernetes/releases?per_page=100");
-                try (InputStream is = githubURL.openConnection(proxy).getInputStream()) {
-                    JSONArray releases = JSONArray.fromObject(IOUtils.toString(is, StandardCharsets.UTF_8));
-                    releases.forEach(rel -> {
-                        JSONObject release = (JSONObject) rel;
-                        if (!release.getBoolean("prerelease") && !release.getBoolean("draft")) {
-                            String id = release.getString("tag_name");
-                            String name = release.getString("name");
-                            ghInstallables.add(new KubectlInstallable(id, name));
-                            new VersionNumber(name);
-                            ghInstallables.sort((i1, i2) -> new VersionNumber(i2.id).compareTo(new VersionNumber(i1.id)));
+                int page = 1;
+                do {
+                    URL githubURL = new URL(uriTemplate + page);
+                    try (InputStream is = githubURL.openConnection(proxy).getInputStream()) {
+                        JSONArray releases = JSONArray.fromObject(IOUtils.toString(is, StandardCharsets.UTF_8));
+                        if (releases.isEmpty()) {
+                            break;
                         }
-                    });
-                }
+                        releases.forEach(rel -> {
+                            JSONObject release = (JSONObject) rel;
+                            if (!release.getBoolean("prerelease") && !release.getBoolean("draft")) {
+                                String id = release.getString("tag_name");
+                                String name = release.getString("name");
+                                ghInstallables.add(new KubectlInstallable(id, name));
+                                new VersionNumber(name);
+                                ghInstallables.sort((i1, i2) -> new VersionNumber(i2.id).compareTo(new VersionNumber(i1.id)));
+                            }
+                        });
+                        page += 1;
+                    }
+                } while (true);
                 installables = ghInstallables;
             }
             return installables;
