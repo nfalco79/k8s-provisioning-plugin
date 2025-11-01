@@ -3,7 +3,8 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>5.9</version>
+        <version>5.27</version>
+        <relativePath />
     </parent>
 
     <groupId>com.github.nfalco79</groupId>
@@ -42,10 +43,12 @@
 
     <properties>
         <java.level>17</java.level>
-        <releaseProfiles>release</releaseProfiles>
         <checkstyle.version>12.1.1</checkstyle.version>
-        <jenkins.baseline>2.479</jenkins.baseline>
+
+        <jenkins.baseline>2.504</jenkins.baseline>
         <jenkins.version>${jenkins.baseline}.3</jenkins.version>
+        <releaseProfiles>release</releaseProfiles>
+        <ban-junit4-imports.skip>false</ban-junit4-imports.skip>
 
         <sonar.organization>nfalco79</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -68,8 +71,8 @@
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.479.x</artifactId>
-                <version>5054.v620b_5d2b_d5e6</version>
+                <artifactId>bom-${jenkins.baseline}.x</artifactId>
+                <version>5543.vfd758c7c868d</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -97,7 +100,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.22.0</version>
+            <version>3.27.6</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -217,6 +220,21 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>eclipse</id>
+            <activation>
+                <property>
+                    <name>m2e.version</name>
+                </property>
+            </activation>
+            <properties>
+                <!-- because eclipse generate a JUnit5 run configuration with placeholder not replaced in the jvm argument section! -->
+                <surefire.forkNumber>1</surefire.forkNumber>
+                <jenkins.javaAgent />
+                <jenkins.insaneHook />
+                <jenkins.addOpens />
+            </properties>
         </profile>
     </profiles>  
 </project>

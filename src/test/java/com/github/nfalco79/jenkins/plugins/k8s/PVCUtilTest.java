@@ -16,20 +16,21 @@
  */
 package com.github.nfalco79.jenkins.plugins.k8s;
 
-import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
 
 public class PVCUtilTest {
 
     @Test
-    public void test_nomalize_with_encoded_characters() {
+    void test_nomalize_with_encoded_characters() {
         String result = PVCUtil.normalize("MY projects/cm.images-docker-image%2fcli");
-        Assertions.assertThat(result).matches("[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*");
+        assertThat(result).matches("[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*");
     }
 
     @Test
-    public void test_nomalize_with_spurious_characters() {
+    void test_nomalize_with_spurious_characters() {
         String result = PVCUtil.normalize("CM projects/cm.images-$docker$-images");
-        Assertions.assertThat(result).matches("[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*");
+        assertThat(result).matches("[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*");
     }
 }
