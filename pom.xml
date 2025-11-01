@@ -43,7 +43,7 @@
     <properties>
         <java.level>17</java.level>
         <releaseProfiles>release</releaseProfiles>
-        <checkstyle.version>10.21.2</checkstyle.version>
+        <checkstyle.version>12.1.1</checkstyle.version>
         <jenkins.baseline>2.479</jenkins.baseline>
         <jenkins.version>${jenkins.baseline}.3</jenkins.version>
 
