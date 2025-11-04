@@ -9,7 +9,7 @@
 
     <groupId>com.github.nfalco79</groupId>
     <artifactId>k8s-provisioning</artifactId>
-    <version>1.1.6</version>
+    <version>1.1.7-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <url>https://github.com/nfalco79/k8s-provisioning-plugin</url>
     <name>Kubernates dynamic persistent volume provisioning Plugin</name>
