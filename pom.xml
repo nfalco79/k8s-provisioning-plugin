@@ -11,6 +11,7 @@
     <artifactId>k8s-provisioning</artifactId>
     <version>1.1.6-SNAPSHOT</version>
     <packaging>hpi</packaging>
+    <url>https://github.com/nfalco79/k8s-provisioning-plugin</url>
     <name>Kubernates dynamic persistent volume provisioning Plugin</name>
     <description>This plugin allow agent provisioning in kubernates with persistent volume claim binded to job lifecycle.</description>
 
@@ -120,6 +121,9 @@
                 <artifactId>central-publishing-maven-plugin</artifactId>
                 <version>0.9.0</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>ossrh</publishingServerId>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
